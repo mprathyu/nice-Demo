@@ -1,0 +1,63 @@
+<div class="container">
+  <div class="col-md-12">
+    <h1>Tasks</h1>
+      <p>List of task with status
+        <select name="Status"  (change)="onChange($event.target.value)" class="ui fluid search selection dropdown"> 
+           <option *ngFor="let opt of taskByStatus" [value]="opt">{{opt}}</option>            
+        </select>
+      </p> 
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Task Id</th>
+          <th class="text-center">Task Name</th>
+          <th class="text-center">Task Description</th>
+          <th class="text-center">Assigned UserName</th>       
+          <th class="text-center">Task Status</th>       
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let task of taskList">       
+          <td>{{ task.id }}</td>
+          <td>{{ task.name }}</td>
+          <td>{{ task.description }}</td>
+          <td>{{ task.assignedUser.userName }}</td>
+          <td>{{ task.status }}</td>
+          
+          <td class="text-center">
+             <button class="btn btn-info" (click)="showEditForm(task)">
+              <i class="fas fa-pencil-alt"></i>
+             </button>             
+          </td>       
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-success" (click)="showNewForm()">
+      <i class="fas fa-plus"></i>
+    </button>
+     <form *ngIf="showForm()" [formGroup]="formGroup" (ngSubmit)="saveTask(formGroup.value)">
+      <h2>{{headerText}}</h2>
+      <p >Task Name<input [readonly]="headerText != 'New Task'" type="text" name="name" formControlName="name" /></p>
+      <p >Task Description<input [readonly]="headerText != 'New Task'" type="textBox" name="description" formControlName="description" /></p>
+      <p *ngIf="headerText == 'New Task'">Select User
+        <select name="assignedUser" formControlName="assignedUser" class="ui fluid search selection dropdown"> 
+         <option *ngFor="let user of userList" [value]="user.id">{{user.userName}}</option>
+        </select>
+      </p>
+      <p *ngIf="headerText == 'New Task'">Status of Task <b>Not Started</b></p>
+      <p *ngIf="headerText != 'New Task'">        
+         Assigned User Name <b>{{formGroup.value.assignedUser.userName}}</b>
+      </p>
+      <p *ngIf="headerText != 'New Task'">Select Status
+        <select name="Status" formControlName="status" class="ui fluid search selection dropdown"> 
+           <option *ngFor="let opt of statusOptions" [value]="opt">{{opt}}</option>            
+        </select>
+      </p> 
+      <p>
+        <input type="submit" class="btn btn-primary" value="Save">
+        <input type="button" class="btn btn-warning" value="Cancel" (click)="cancelEditTask()">
+      </p>
+    </form> 
+  </div>
+ </div>

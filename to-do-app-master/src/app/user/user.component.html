@@ -1,0 +1,40 @@
+<div class="container">
+  <div class="col-md-12">
+    <h1>Users</h1>
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">User Id</th>
+          <th class="text-center">User Name</th>       
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let user of userList">       
+          <td>{{ user.id }}</td>
+          <td>{{ user.userName }}</td>
+          
+          <td class="text-center">
+             <button class="btn btn-info" (click)="showEditForm(user)">
+              <i class="fas fa-pencil-alt"></i>
+            </button>
+            <button class="btn btn-danger" (click)="removeUser(user)">
+              <i class="fas fa-trash-alt"></i>
+            </button> 
+          </td>       
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-success" (click)="showNewForm()">
+      <i class="fas fa-plus"></i>
+    </button>
+     <form *ngIf="showForm()" [formGroup]="formGroup" (ngSubmit)="saveUser(formGroup.value)">
+      <h2>{{headerText}}</h2>
+      <p>User Name<input type="text" name="userName" formControlName="userName" /></p>
+      <p>
+        <input type="submit" class="btn btn-primary" value="Save">
+        <input type="button" class="btn btn-warning" value="Cancel" (click)="cancelEditUser()">
+      </p>
+    </form> 
+  </div>
+ </div>

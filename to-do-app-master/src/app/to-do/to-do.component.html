@@ -1,0 +1,94 @@
+<div class="container">
+  <div class="col-md-12">
+    <h1>Todos</h1>
+      <!-- <p>List of todo with status
+        <select name="Status"  (change)="onChange($event.target.value)" class="ui fluid search selection dropdown"> 
+           <option *ngFor="let opt of todoByStatus" [value]="opt">{{opt}}</option>            
+        </select>
+      </p>  -->
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Todo Id</th>
+          <th class="text-center">Todo Name</th>
+            
+          <th class="text-center"></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of todoList">       
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.name }}</td>
+          <!-- <td>{{ todo.description }}</td>
+          <td>{{ todo.assignedUser.userName }}</td>
+          <td>{{ todo.status }}</td> -->
+          
+          <td class="text-center">
+             <button class="btn btn-info" (click)="showEditForm(todo)">
+              <i class="fas fa-pencil-alt"></i>
+             </button> 
+            <button class="btn btn-danger" (click)="removeTodo(todo)">
+              <i class="fas fa-trash-alt"></i>
+            </button>             
+          </td>       
+        </tr>
+      </tbody>
+    </table>
+    <button class="btn btn-success" (click)="showNewForm()">
+      <i class="fas fa-plus"></i>
+    </button>
+     <form *ngIf="showForm()" [formGroup]="formGroup" (ngSubmit)="saveToDo(formGroup.value)">
+      <h2>{{headerText}}</h2>
+      <p >Todo Name<input [readonly]="headerText != 'New ToDo'" type="text" name="name" formControlName="name" /></p>
+      
+      <p *ngIf="headerText != 'New ToDo'">Select Task
+        <select name="tasksList" formControlName="tasksList" class="ui fluid search selection dropdown" multiple> 
+         <option *ngFor="let task of taskList" [value]="task.id">{{task.name}}</option>
+        </select>
+      </p>
+      
+      <p>
+        <input type="submit" class="btn btn-primary" value="Save">
+        <input type="button" class="btn btn-warning" value="Cancel" (click)="cancelEditTodo()">
+      </p>
+    </form> 
+    <table class="table table-bordered table-striped table-hover">
+      <thead>
+        <tr>
+          <th class="text-center">Todo Id</th>
+          <th class="text-center">Todo Name</th>
+            
+          <th class="text-center">Tasks</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let todo of todoList">       
+          <td>{{ todo.id }}</td>
+          <td>{{ todo.name }}</td>
+          <td>
+            <table class="table table-bordered table-striped table-hover">
+             <thead>
+                <tr>
+                  <th class="text-center">Task Id</th>
+                  <th class="text-center">Task Description</th>
+                  <th class="text-center">Task status</th>
+                  <th class="text-center">Task Name</th>
+                  <th class="text-center">Assigned User</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let task of todo.tasksList">       
+                  <td>{{ task.id }}</td>
+                  <td>{{ task.description }}</td>
+                  <td>{{ task.status }}</td>
+                  <td>{{ task.name }}</td>
+                  <td>{{ task.assignedUser.userName }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </td>             
+        </tr>
+      </tbody>
+    </table>
+  </div>
+ </div>
